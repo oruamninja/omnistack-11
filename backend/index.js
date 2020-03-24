@@ -6,7 +6,10 @@ const app = express();
 
 // criando primeira rota
 app.get('/', (request, response) => {
-    response.send('Hello World !!!');
+    response.json({
+        evento: 'Semana OmniStack-11.0',
+        aluno: 'Mauro Cesar'
+    });
 });
 
 app.listen(3333);

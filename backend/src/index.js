@@ -2,9 +2,14 @@
 
 const express = require('express');
 
+const cors = require('cors');
+
 const routes = require('./routes') // importa as rotas do arquivo separado.
 
 const app = express();
+
+// quando em producao passo cors({origin:'dominio onte esta o app'})
+app.use(cors());
 
 // especificar que as requisicoes, os dados seram em json
 app.use(express.json());

@@ -1,35 +1,24 @@
 const express = require('express');
-
 const routes = express.Router();
+const OngController = require('./controllers/OngController');
+const IncidentController = require('./controllers/IncidentController');
+const ProfileController = require('./controllers/ProfileController');
+const SessionController = require('./controllers/SessionController');
 
-const crypto = require('crypto');
-
-const connection = require('./database/connection');
-
+routes.post( '/sessions', SessionController.create );
 
 // listar ongs
-routes.get('/ongs', async (request, response) => {
-    const ongs = await connection('ongs').select('*');
-    return response.json(ongs);
-});
-
+routes.get( '/ongs', OngController.index );
 // rota para criar uma ong
-routes.post('/ongs', async (request, response) => {
-    const { name, email, whatsapp, city, uf } = request.body;
+routes.post( '/ongs', OngController.create );
 
-    // como o id da ong sera criado um id aleatorio, sera usado o crypto
-    const id = crypto.randomBytes(4).toString('HEX');
+routes.get( '/profile', ProfileController.index );
 
-    await connection('ongs').insert({
-        id,
-        name,
-        email,
-        whatsapp,
-        city,
-        uf
-    })
-
-    response.json({ id });
-});
+// rota para listar casos
+routes.get( '/incidents', IncidentController.index );
+// rota para criar uma caso
+routes.post( '/incidents', IncidentController.create );
+// rota para deletar caso
+routes.delete( '/incidents/:id', IncidentController.delete );
 
 module.exports = routes;

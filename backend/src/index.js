@@ -2,10 +2,14 @@
 
 const express = require('express');
 
+const routes = require('./routes') // importa as rotas do arquivo separado.
+
 const app = express();
 
 // especificar que as requisicoes, os dados seram em json
 app.use(express.json());
+
+app.use(routes) // usa as rotas no aplicativo.
 
 /**
  * Rota : http://localhost:3333/users
@@ -31,19 +35,5 @@ app.use(express.json());
     * Driver : Select * From users
     * Query Builder : table('users').select(*).where() -- npm install knex
     */
-
-// criando primeira rota
-app.post('/users', (request, response) => {
-    const queryParamns = request.query;
-    const routeParamns = request.params;
-    const body = request.body;
-    console.log('Query paramns: ', queryParamns);
-    console.log('Route paramns: ', routeParamns);
-    console.log('Body: ', body);
-    response.json({
-        evento: 'Semana OmniStack-11.0',
-        aluno: 'Mauro Cesar'
-    });
-});
 
 app.listen(3333);
